@@ -36,22 +36,52 @@ class LinebotsController < ApplicationController
 
   def message(event)
     # ここに書いていく
+    p event
+    @dresseds = Dressed.all
     case event
     when Line::Bot::Event::Postback
       LineBot::PostbackEvent.send(event['postback']['data'])
     when Line::Bot::Event::Message
+      today = Date.today
+      now = Time.current
+      hour = now.hour
+      day = now.day
+      month = now.month
+
       case event['message']['type']
       when 'sticker' # スタンプイベントの時
-        # === ここに追加する ===
-        # === ここに追加する ===
+        {
+            "type": "text",
+            "text": "毎日着替えて、最高の日々にしよう！！"
+        }
       when 'text' # メッセージイベントの時
-        # event['message']['text'] = ユーザーが送ってきた
-        if event['message']['text'] =~ /カテゴリ/
-          LineBot::Messages::LargeCategoriesMessage.new.send
-        elsif event['message']['text'] =~ /FlexMessage/
-          LineBot::Messages::SampleMessage.new.send
-        elsif event['message']['text'] =~ /じゃんけん/
-          LineBot::Messages::JankenMessage.new.send
+        if event['message']['text'] =~ /これまでの記録/
+          @dresseds = Dressed.all
+          len = @dresseds.length
+          {
+              "type": "text",
+              "text": "これまでに" + len.to_s + "日着替えているね！"
+          }
+        elsif event['message']['text'] =~ /今月の記録/
+          beginning_of_month = today.beginning_of_month
+          @dresseds = Dressed.select('day').where('day >= ?', beginning_of_month)
+          len = @dresseds.length
+          percent = ((100 * len) / day)
+          {
+              "type": "text",
+              "text": "今月の" + day.to_s + "日間で" + len.to_s + "日着替えているよ！" + percent.to_s + "%の達成率だね。"
+          }
+
+        elsif event['message']['text'] =~ /りょうた/
+          {
+              "type": "text",
+              "text": "みっこ天才！"
+          }
+        elsif event['message']['text'] =~ /オキガエくん/
+          {
+              "type": "text",
+              "text": "はい！オキガエくんだよ！朝、パジャマから着替えたら、パジャマをカゴに入れてね。"
+          }
         # === ここに追加する ===
         # === ここに追加する ===
         else
