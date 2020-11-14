@@ -1,0 +1,22 @@
+<%= form_with(model: dressed, local: true) do |form| %>
+  <% if dressed.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(dressed.errors.count, "error") %> prohibited this dressed from being saved:</h2>
+
+      <ul>
+        <% dressed.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :day %>
+    <%= form.date_select :day %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
