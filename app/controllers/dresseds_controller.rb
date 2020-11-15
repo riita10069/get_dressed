@@ -38,14 +38,14 @@ class DressedsController < ApplicationController
     hour = now.hour
     day = now.day
     month = now.month
-
-
-    if true || is_morning(hour)
+    @dressed = Dressed.new(day: today)
+    if is_morning(hour)
       @past = Dressed.find_by(day: today)
-      if @past == nil || true
-        #if @dressed.save
+      if @past == nil
+        if @dressed.save
           push_message
           p 'success create'
+        end
       end
     end
   end
