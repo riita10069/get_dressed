@@ -1,24 +1,13 @@
-# README
+# サポーターズウィンターハッカソン
+## オキガエくん
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+毎朝、着替えることをサポートするLINE botオキガエくんのRails APIのレポジトリです。
 
-Things you may want to cover:
+このAPIでは、
 
-* Ruby version
+- LINE Platform を用いて、LINE botの実現。
+- LINE Appから送られてくる記録の確認をSQLiteのDBで確認する。
+- ESP32/HX711/ロードセルで重量を感じたことをトリガーに着替えた記録を、朝(AM6~10)かつまだその日の登録をしていない時に、DBに保存
 
-* System dependencies
+をしています。
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
